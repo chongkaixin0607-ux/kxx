@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>👑🌱 开心果国 (Pistachio Kingdom Official)</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Fredoka+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg-green: #b2d3be; /* 开心果嫩绿底色 */
+        --dot-green: #9abfa7; /* 波点绿 */
+        --card-border: #2e5a2e; /* 标志性深绿粗边框 */
+        --card-bg: #ffffff; /* 干净的卡片底面 */
+        --royal-gold: #ffa726; /* 温暖金黄 */
+        --accent-pink: #ff8a80; /* 萌萌腮红粉 */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "ZCOOL KuaiLe", "Fredoka One", sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-green);
+        /* 可爱密集大波点底纹 */
+        background-image: radial-gradient(
+          var(--dot-green) 20%,
+          transparent 20%
+        );
+        background-size: 30px 30px;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* ==================== 纯CSS手绘：超软萌开心果卡通形象 ==================== */
+      .pistachio-sprite {
+        position: fixed;
+        width: 100px;
+        height: 130px;
+        z-index: 1; /* 放在最底层作为背景装饰 */
+        animation: floaty 4s infinite ease-in-out;
+      }
+
+      /* 四周漂浮，绝对不挤在中间打扰答题 */
+      .p1 {
+        left: 5%;
+        top: 15%;
+        animation-delay: 0s;
+      }
+      .p2 {
+        left: 8%;
+        bottom: 15%;
+        animation-delay: 1.5s;
+        transform: scale(0.85);
+      }
+      .p3 {
+        right: 8%;
+        top: 12%;
+        animation-delay: 0.7s;
+      }
+      .p4 {
+        right: 6%;
+        bottom: 15%;
+        animation-delay: 2.2s;
+        transform: scale(0.9);
+      }
+
+      /* 给右上角或某个开心果带上皇冠 */
+      .p3::before {
+        content: "\f51e";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        top: -22px;
+        left: 50%;
+        transform: translateX(-50%) rotate(15deg);
+        color: var(--royal-gold);
+        font-size: 1.8rem;
+        text-shadow: 2px 2px 0 var(--card-border);
+        z-index: 2;
+      }
+
+      @keyframes floaty {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-3deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(4deg) scale(1.03);
+        }
+      }
+
+      /* 纯CSS果壳及果仁手绘结构 */
+      .shell {
+        width: 80px;
+        height: 110px;
+        background: #f4e7ce;
+        border: 4px solid var(--card-border);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        position: relative;
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+      }
+      .kernel {
+        width: 38px;
+        height: 64px;
+        background: #9ccc65;
+        border: 4px solid var(--card-border);
+        border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        overflow: hidden;
+      }
+      .kernel-inner {
+        width: 100%;
+        height: 35px;
+        background: #aed581;
+        position: absolute;
+        bottom: 0;
+      }
+      .face {
+        position: absolute;
+        width: 100%;
+        top: 40px;
+        text-align: center;
+      }
+      .eyes {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 20px;
+      }
+      .eye {
+        width: 7px;
+        height: 7px;
+        background: #333;
+        border-radius: 50%;
+      }
+      .smile {
+        width: 14px;
+        height: 8px;
+        border: 3px solid #333;
+        border-top: none;
+        border-radius: 0 0 10px 10px;
+        margin: 4px auto 0 auto;
+      }
+      .blush {
+        width: 8px;
+        height: 5px;
+        background: var(--accent-pink);
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
+      }
+      .blush.left {
+        left: 14px;
+      }
+      .blush.right {
+        right: 14px;
+      }
+      .hand {
+        width: 16px;
+        height: 4px;
+        background: var(--card-border);
+        position: absolute;
+        top: 60px;
+        border-radius: 2px;
+      }
+      .hand.left {
+        left: -10px;
+        transform: rotate(20deg);
+      }
+      .hand.right {
+        right: -10px;
+        transform: rotate(-20deg);
+      }
+
+      /* ==================== 单卡片标准舞台（不拥挤） ==================== */
+      .container {
+        background: var(--card-bg) !important;
+        border: 5px solid var(--card-border) !important;
+        border-radius: 35px !important;
+        box-shadow: 0 15px 0px var(--card-border) !important;
+        width: 100%;
+        max-width: 440px;
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
+        z-index: 10; /* 永远在开心果图层之上 */
+        display: none;
+      }
+
+      .container.active {
+        display: block !important;
+        animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        color: var(--card-border);
+        margin-top: 10px;
+      }
+      h2 {
+        font-size: 1.8rem;
+        color: var(--card-border);
+        margin-bottom: 15px;
+      }
+
+      /* Q弹可爱的扁平大按钮 */
+      .btn {
+        background: #81c784;
+        color: white;
+        border: 4px solid var(--card-border);
+        border-radius: 20px;
+        padding: 16px 25px;
+        font-size: 1.35rem;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 8px 0 var(--card-border);
+        transition: all 0.05s ease;
+        width: 100%;
+        margin-top: 15px;
+      }
+      .btn:active {
+        transform: translateY(8px);
+        box-shadow: 0 0px 0 var(--card-border);
+      }
+      .btn-orange {
+        background: #ffb74d;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 14px;
+        border: 4px solid var(--card-border);
+        border-radius: 18px;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        outline: none;
+        text-align: center;
+        background: #f9f9f9;
+      }
+
+      /* 右上角圆形挂件 */
+      .header-controls {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        gap: 12px;
+        z-index: 100;
+      }
+      .circle-btn {
+        background: white;
+        border: 3px solid var(--card-border);
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 0 var(--card-border);
+      }
+
+      /* 圆形头像框 */
+      .avatar-box {
+        width: 120px;
+        height: 120px;
+        border: 4px dashed var(--card-border);
+        border-radius: 50%;
+        margin: 0 auto 15px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: #fafafa;
+        overflow: hidden;
+      }
+
+      /* 呆萌扁平进度条 */
+      .progress-box {
+        background: #e0e0e0;
+        border: 4px solid var(--card-border);
+        border-radius: 15px;
+        height: 20px;
+        margin-bottom: 25px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: #81c784;
+        width: 0%;
+        transition: width 0.2s ease;
+      }
+
+      /* 答题卡片选项 */
+      .options-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .option-card {
+        background: #fff;
+        border: 3px solid var(--card-border);
+        border-radius: 18px;
+        padding: 16px;
+        text-align: left;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1rem;
+        box-shadow: 0 5px 0 var(--card-border);
+      }
+      .option-card:hover {
+        background: #e8f5e9;
+      }
+
+      /* 最终结果卡片内的纸张式护照 */
+      .passport-card {
+        background: #fffdeb;
+        border: 3px solid var(--card-border);
+        border-radius: 15px;
+        padding: 18px;
+        text-align: left;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pistachio-sprite p1">
+      <div class="shell">
+        <div class="kernel"><div class="kernel-inner"></div></div>
+        <div class="face">
+          <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="smile"></div>
+        </div>
+        <div class="hand left"></div>
+        <div class="hand right"></div>
+      </div>
+    </div>
+    <div class="pistachio-sprite p2">
+      <div class="shell">
+        <div class="kernel"><div class="kernel-inner"></div></div>
+        <div class="face">
+          <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="smile"></div>
+        </div>
+        <div class="hand left"></div>
+        <div class="hand right"></div>
+      </div>
+    </div>
+    <div class="pistachio-sprite p3">
+      <div class="shell">
+        <div class="kernel"><div class="kernel-inner"></div></div>
+        <div class="face">
+          <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="smile"></div>
+        </div>
+        <div class="hand left"></div>
+        <div class="hand right"></div>
+      </div>
+    </div>
+    <div class="pistachio-sprite p4">
+      <div class="shell">
+        <div class="kernel"><div class="kernel-inner"></div></div>
+        <div class="face">
+          <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="blush left"></div>
+          <div class="blush right"></div>
+          <div class="smile"></div>
+        </div>
+        <div class="hand left"></div>
+        <div class="hand right"></div>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <div class="circle-btn" onclick="toggleMusic(event)">
+        <i id="music-icon" class="fas fa-music"></i>
+      </div>
+      <div class="circle-btn" onclick="tryEnterAdmin()">
+        <i class="fas fa-crown" style="color: var(--royal-gold)"></i>
+      </div>
+    </div>
+
+    <audio
+      id="bgm"
+      loop
+      preload="auto"
+      src="https://vgmsite.com/soundtracks/neko-atsume-atsume-bmg-collection/ioasvxfhku/01.%20Neko%20Atsume%20Theme.mp3"
+    ></audio>
+    <audio
+      id="pop-sfx"
+      src="https://actions.google.com/sounds/v1/cartoon/pop.ogg"
+    ></audio>
+
+    <div class="container active" id="view-welcome">
+      <div style="font-size: 3.5rem">👑</div>
+      <h1>开心果国</h1>
+      <p
+        style="
+          font-weight: bold;
+          color: var(--card-border);
+          letter-spacing: 1px;
+          margin-bottom: 20px;
+        "
+      >
+        Kai Xin Pistachio Kingdom
+      </p>
+
+      <div
+        style="
+          border: 3px dashed var(--card-border);
+          padding: 20px;
+          border-radius: 20px;
+          text-align: left;
+          font-size: 1.05rem;
+          line-height: 1.6;
+          background: #faf9f0;
+        "
+      >
+        🌱 欢迎来到神秘的开心果国度！这里由伟大的
+        <b>国王 kx</b> 亲自统治。<br /><br />
+        你究竟是一颗平庸的坚果，还是潜伏在民间的“开心果暴君”？前方15道皇家测试已开启，准备好接受审核，赢取你的专属国民护照吧！
+      </div>
+      <button class="btn btn-orange" onclick="startFlow()">
+        ✨ 开启命运测试 ✨
+      </button>
+    </div>
+
+    <div class="container" id="view-start">
+      <h2>👤 录入国民档案</h2>
+      <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px">
+        大王需要核对您的身份信息
+      </p>
+
+      <div
+        class="avatar-box"
+        onclick="document.getElementById('avatar-input').click()"
+      >
+        <div id="avatar-preview-box">
+          <i class="fas fa-camera fa-2x" style="color: #aaa"></i>
+        </div>
+      </div>
+      <p
+        style="
+          font-size: 0.85rem;
+          font-weight: bold;
+          margin-bottom: 15px;
+          color: var(--card-border);
+        "
+      >
+        📷 点击上传高清头像 (必填)
+      </p>
+      <input
+        type="file"
+        id="avatar-input"
+        accept="image/*"
+        style="display: none"
+        onchange="handleAvatar(this)"
+      />
+
+      <input
+        type="text"
+        id="username"
+        placeholder="请输入您的国民大名 (必填)"
+      />
+      <button class="btn" onclick="goToQuestions()">🎮 进入皇家测试</button>
+    </div>
+
+    <div class="container" id="view-test">
+      <div class="progress-box">
+        <div class="progress-fill" id="progress-bar"></div>
+      </div>
+      <h3
+        id="question-number"
+        style="text-align: left; margin-bottom: 5px; color: var(--royal-gold)"
+      >
+        第 1 题
+      </h3>
+      <h2
+        id="question-text"
+        style="
+          text-align: left;
+          font-size: 1.25rem;
+          min-height: 60px;
+          line-height: 1.4;
+        "
+      >
+        加载中...
+      </h2>
+      <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <div class="container" id="view-result">
+      <h2>🎉 审核报告生成！</h2>
+      <p style="font-weight: bold; margin-top: 10px; font-size: 1.2rem">
+        开心果契合度：<span
+          id="score-display"
+          style="color: #e57373; font-size: 1.6rem"
+          >0</span
+        >
+        / 60
+      </p>
+
+      <div class="passport-card">
+        <div
+          style="
+            text-align: center;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 8px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--card-border);
+          "
+        >
+          PASSPORT
+        </div>
+        <div style="display: flex; gap: 18px; margin-top: 15px">
+          <img
+            src=""
+            id="pass-photo"
+            style="
+              width: 105px;
+              height: 135px;
+              border: 3px solid var(--card-border);
+              border-radius: 8px;
+              object-fit: cover;
+              background: #fff;
+            "
+          />
+          <div style="font-size: 1rem; line-height: 1.7; text-align: left">
+            <p>
+              <b>大名:</b>
+              <span
+                id="pass-name"
+                style="color: var(--card-border); font-weight: bold"
+              ></span>
+            </p>
+            <p>
+              <b>ID:</b>
+              <span
+                id="pass-id"
+                style="color: #666; font-family: monospace"
+              ></span>
+            </p>
+            <p>
+              <b>等级:</b>
+              <span
+                id="pass-level"
+                style="color: var(--card-border); font-weight: bold"
+              ></span>
+            </p>
+          </div>
+        </div>
+        <div
+          style="
+            text-align: right;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #e57373;
+            font-weight: bold;
+          "
+        >
+          👑 国王 kx 亲笔批准
+        </div>
+      </div>
+
+      <div
+        style="
+          margin-top: 25px;
+          background: #fff3e0;
+          padding: 15px;
+          border: 2px dashed var(--royal-gold);
+          border-radius: 15px;
+          font-size: 0.95rem;
+          font-weight: bold;
+          color: #555;
+          line-height: 1.5;
+        "
+      >
+        👑 <b>皇家敕令：</b
+        ><br />本国档案一经铸就，行愿承当，命运不设回音键，永无重新测试之说！
+      </div>
+    </div>
+
+    <div class="container" id="view-admin" style="max-width: 500px">
+      <h2>👑 国王 kx 的中央大厅</h2>
+      <div
+        style="
+          max-height: 250px;
+          overflow-y: auto;
+          background: #fff;
+          border: 3px solid var(--card-border);
+          border-radius: 15px;
+          font-size: 0.9rem;
+          margin-top: 15px;
+        "
+      >
+        <table
+          style="width: 100%; border-collapse: collapse; text-align: center"
+        >
+          <style>
+            th,
+            td {
+              padding: 8px;
+              border-bottom: 1px solid #eee;
+            }
+          </style>
+          <thead style="background: #e8f5e9">
+            <tr>
+              <th>头像</th>
+              <th>名字</th>
+              <th>得分</th>
+              <th>等级</th>
+            </tr>
+          </thead>
+          <tbody id="admin-list-body"></tbody>
+        </table>
+      </div>
+      <button class="btn" onclick="clearData()" style="background: #e57373">
+        清空秘密档案
+      </button>
+      <button class="btn btn-orange" onclick="showView('view-welcome')">
+        返回主页
+      </button>
+    </div>
+
+    <script>
+      // 15题完备皇家题库
+      const questions = [
+        {
+          q: "当你看到一盘开心果时，你的第一反应是？",
+          a: "慢条斯理拿一颗剥一颗",
+          b: "疯狂抓一把塞进兜里",
+          c: "用牙咬开那些没开口的死果",
+          d: "大喊‘参见kx大王’然后连壳吞掉！",
+          pts: [1, 2, 3, 4],
+        },
+        {
+          q: "如果不小心在皇家广场上摔倒了，你会？",
+          a: "迅速爬起来假装无事发生",
+          b: "高呼‘这是本国特有的朝圣姿势！’",
+          c: "顺便在地上做个俯卧撑撑场面",
+          d: "躺在地上开始大摆Pose让大家拍照",
+          pts: [1, 4, 2, 3],
+        },
+        {
+          q: "发现一颗完全没有裂缝的开心果，你会？",
+          a: "默默把它丢掉",
+          b: "找工具砸开它",
+          c: "用神秘的开心果念力让它自动爆开",
+          d: "用指甲死磕，直到流血也不放手",
+          pts: [1, 2, 4, 3],
+        },
+        {
+          q: "朋友不开心了，你最常用的安慰方式是？",
+          a: "静静地陪伴聆听",
+          b: "带他们去吃一顿好吃的",
+          c: "直接将其强行绑架来见kx大王",
+          d: "发一堆超级魔性的搞笑表情包",
+          pts: [1, 2, 4, 3],
+        },
+        {
+          q: "如果要把开心果国徽纹在全身，你会选择纹在哪里？",
+          a: "手腕上，低调内敛",
+          b: "额头正中央，像二郎神一样威风",
+          c: "脸颊上，当个可爱的标志",
+          d: "全身纹满！成为移动的果徽！",
+          pts: [1, 3, 2, 4],
+        },
+        {
+          q: "如果开心果国举办kx大王登基大典，你准备进贡什么？",
+          a: "我自己（申请成为大王座下首席剥果大将军）",
+          b: "一个纯金打造的开心果壳",
+          c: "一包原味开心果",
+          d: "一封深情赞美信",
+          pts: [4, 3, 2, 1],
+        },
+        {
+          q: "在星期一的早晨，你的精神状态通常是？",
+          a: "安详地闭目养神",
+          b: "略带微笑的麻木",
+          c: "像一颗随时会炸开的坚果",
+          d: "疯狂大笑，试图用开心果能量感染所有人",
+          pts: [1, 2, 3, 4],
+        },
+        {
+          q: "你的专属开心果超能力是什么？",
+          a: "精准挑出坏果子",
+          b: "生是开心果的人，死是开心果的仁！",
+          c: "只要你在的地方，空气都会变成开心果绿",
+          d: "吃完不长胖",
+          pts: [1, 3, 4, 2],
+        },
+        {
+          q: "国都准备建立一个新地标，你向大王提议建立：",
+          a: "一个现代化的坚果游乐场",
+          b: "100米高的金色大王剥果雕像",
+          c: "一个安静的皇家图书馆",
+          d: "一整条开心果美食街",
+          pts: [2, 4, 1, 3],
+        },
+        {
+          q: "大王颁布了新律法：‘不准不开心’。你会怎么做？",
+          a: "建立‘开心果暴政’强迫所有路人一起大笑",
+          b: "努力保持微笑",
+          c: "买一杯开心果拿铁庆祝",
+          d: "上街给所有路人讲冷笑话",
+          pts: [4, 1, 2, 3],
+        },
+        {
+          q: "如果下一秒你突然变成了植物，你觉得自己会是？",
+          a: "皇家御用开心果树上最骄傲的那颗",
+          b: "一株随风摇摆的无名杂草",
+          c: "一颗带刺的仙人掌",
+          d: "一朵向日葵，天天盯着太阳看",
+          pts: [4, 1, 2, 3],
+        },
+        {
+          q: "在街上看到有人在偷偷摸摸吃开心果不剥壳，你会？",
+          a: "上去提醒他吃壳伤胃",
+          b: "抢过来并大喊：大王的财产也是你能动纳！",
+          c: "假装没看到默默走开",
+          d: "拍照发朋友圈分享奇人异事",
+          pts: [2, 4, 1, 3],
+        },
+        {
+          q: "晚上失眠的时候，你通常通过数什么来入睡？",
+          a: "数绵羊",
+          b: "数‘一颗kx大王，两颗kx大王...’",
+          c: "数一共有多少颗开心果",
+          d: "数自己今天又出了多少洋相",
+          pts: [1, 4, 2, 3],
+        },
+        {
+          q: "你对加入‘kx大王’管理的开心果国有多大诚意？",
+          a: "生是开心果的人，死是开心果的仁！",
+          b: "很想加入这个大家庭",
+          c: "试一试的心态",
+          d: "我已经准备好我的坚果护照了",
+          pts: [4, 2, 1, 3],
+        },
+        {
+          q: "最后一步！如果你现在有机会当面对kx大王说一句话，那会是？",
+          a: "願大王萬歲萬歲萬萬歲，開心果管够！",
+          b: "嗨，你好呀",
+          c: "大王今天穿得很绿哦",
+          d: "能给我报销一下来时的车费吗",
+          pts: [4, 1, 2, 3],
+        },
+      ];
+
+      let currentQuestionIndex = 0;
+      let totalScore = 0;
+      let userAvatarBase64 = "";
+      let isMusicPlaying = false;
+      let hasInteracted = false;
+
+      // 全局交互激活音乐逻辑 (只有第一次点空白处会自动触发播放)
+      document.body.addEventListener(
+        "click",
+        () => {
+          if (!hasInteracted && !isMusicPlaying) {
+            hasInteracted = true;
+            const bgm = document.getElementById("bgm");
+            bgm
+              .play()
+              .then(() => {
+                isMusicPlaying = true;
+                document.getElementById("music-icon").className =
+                  "fas fa-music fa-spin";
+              })
+              .catch(() => {});
+          }
+        },
+        { once: false }
+      );
+
+      function playPop() {
+        const sfx = document.getElementById("pop-sfx");
+        sfx.currentTime = 0;
+        sfx.play().catch(() => {});
+      }
+
+      // 彻底重写的音符开关功能，实现随心关、开
+      function toggleMusic(event) {
+        if (event) event.stopPropagation(); // 阻止冒泡，避免触发body的点击监听
+        hasInteracted = true; // 声明已经手动介入
+        const bgm = document.getElementById("bgm");
+        const icon = document.getElementById("music-icon");
+
+        if (isMusicPlaying) {
+          bgm.pause();
+          icon.className = "fas fa-music";
+          isMusicPlaying = false;
+        } else {
+          bgm
+            .play()
+            .then(() => {
+              icon.className = "fas fa-music fa-spin";
+              isMusicPlaying = true;
+            })
+            .catch(() => {});
+        }
+      }
+
+      function showView(viewId) {
+        document
+          .querySelectorAll(".container")
+          .forEach((c) => c.classList.remove("active"));
+        document.getElementById(viewId).classList.add("active");
+        playPop();
+      }
+
+      function startFlow() {
+        showView("view-start");
+      }
+
+      function handleAvatar(input) {
+        const file = input.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            userAvatarBase64 = e.target.result;
+            document.getElementById(
+              "avatar-preview-box"
+            ).innerHTML = `<img src="${userAvatarBase64}" style="width:100%;height:100%;object-fit:cover;">`;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function goToQuestions() {
+        const name = document.getElementById("username").value.trim();
+        if (!name || !userAvatarBase64) {
+          alert("👑 国王提示：大名和御容头像缺一不可哦！");
+          return;
+        }
+        currentQuestionIndex = 0;
+        totalScore = 0;
+        showView("view-test");
+        loadQuestion();
+      }
+
+      function loadQuestion() {
+        const qData = questions[currentQuestionIndex];
+        const progressPercent = (currentQuestionIndex / questions.length) * 100;
+        document.getElementById("progress-bar").style.width =
+          progressPercent + "%";
+        document.getElementById("question-number").innerText = `第 ${
+          currentQuestionIndex + 1
+        } / ${questions.length} 题`;
+        document.getElementById("question-text").innerText = qData.q;
+
+        const container = document.getElementById("options-container");
+        container.innerHTML = "";
+
+        const prefixes = ["A", "B", "C", "D"];
+        const optionTexts = [qData.a, qData.b, qData.c, qData.d];
+
+        for (let i = 0; i < 4; i++) {
+          let card = document.createElement("div");
+          card.className = "option-card";
+          card.innerHTML = `<span>${prefixes[i]}. ${optionTexts[i]}</span>`;
+          card.onclick = () => {
+            totalScore += qData.pts[i];
+            currentQuestionIndex++;
+            playPop();
+            if (currentQuestionIndex < questions.length) {
+              loadQuestion();
+            } else {
+              finishTest();
+            }
+          };
+          container.appendChild(card);
+        }
+      }
+
+      function getLevel(score) {
+        if (score <= 25) return "💚 普通坚果";
+        if (score <= 42) return "💚 开心果国民";
+        if (score <= 55) return "💚 高级开心果";
+        return "💚 开心果暴君";
+      }
+
+      function finishTest() {
+        const name = document.getElementById("username").value.trim();
+        const randId = "Pistachio" + Math.floor(1000 + Math.random() * 9000);
+        const levelStr = getLevel(totalScore);
+
+        document.getElementById("score-display").innerText = totalScore;
+        document.getElementById("pass-name").innerText = name;
+        document.getElementById("pass-id").innerText = randId;
+        document.getElementById("pass-level").innerText = levelStr;
+        document.getElementById("pass-photo").src = userAvatarBase64;
+
+        const citizenData = {
+          name: name,
+          id: randId,
+          score: totalScore,
+          level: levelStr,
+          avatar: userAvatarBase64,
+        };
+        let allCitizens =
+          JSON.parse(localStorage.getItem("pistachio_citizens")) || [];
+        allCitizens.push(citizenData);
+        localStorage.setItem("pistachio_citizens", JSON.stringify(allCitizens));
+
+        showView("view-result");
+      }
+
+      function tryEnterAdmin() {
+        const pwd = prompt("🔐 请输入国王专属密码：");
+        if (pwd === "kaixinxin5200") {
+          renderAdminTable();
+          showView("view-admin");
+        } else if (pwd !== null) {
+          alert("💥 密令错误！");
+        }
+      }
+
+      function renderAdminTable() {
+        let allCitizens =
+          JSON.parse(localStorage.getItem("pistachio_citizens")) || [];
+        allCitizens.sort((a, b) => b.score - a.score);
+        const tbody = document.getElementById("admin-list-body");
+        tbody.innerHTML = "";
+
+        if (allCitizens.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="padding:15px; color:#999;">暂无国民数据 📭</td></tr>`;
+          return;
+        }
+        allCitizens.forEach((c) => {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `<td><img src="${c.avatar}" style="width:35px;height:35px;border-radius:50%;object-fit:cover;"></td><td><b>${c.name}</b></td><td>${c.score}</td><td>${c.level}</td>`;
+          tbody.appendChild(tr);
+        });
+      }
+
+      function clearData() {
+        if (confirm("👑 确定要清空全部国民历史数据吗？")) {
+          localStorage.removeItem("pistachio_citizens");
+          renderAdminTable();
+        }
+      }
+    </script>
+  </body>
+</html>
